@@ -6,7 +6,6 @@
 
 #include <mcu/flash.h>
 
-
 #include "boot_link_config.h"
 
 const struct __sFILE_fake __sf_fake_stdin;

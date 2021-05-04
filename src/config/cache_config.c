@@ -30,6 +30,9 @@ void cache_invalidate_data() {
 void cache_invalidate_data_block(void *address, size_t size) {
 #if USE_CACHE
   SCB_InvalidateDCache_by_Addr(address, size);
+#else
+  MCU_UNUSED_ARGUMENT(address);
+  MCU_UNUSED_ARGUMENT(size);
 #endif
 }
 void cache_clean_data() {
@@ -40,5 +43,8 @@ void cache_clean_data() {
 void cache_clean_data_block(void *address, size_t size) {
 #if USE_CACHE
   SCB_CleanDCache_by_Addr(addr, size);
+#else
+  MCU_UNUSED_ARGUMENT(address);
+  MCU_UNUSED_ARGUMENT(size);
 #endif
 }
