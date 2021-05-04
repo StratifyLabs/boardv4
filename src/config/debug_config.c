@@ -20,3 +20,7 @@ void debug_enable_led() {
 void debug_disable_led() {
   //turn the debug LED off
 }
+
+void debug_trace_event(void * event){
+  //write the event to the trace ffifo
+}

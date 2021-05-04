@@ -25,7 +25,7 @@ void clock_set_channel(const mcu_channel_t *channel) {
 }
 
 void clock_get_channel(mcu_channel_t *channel) {
-  stm32_clock_get_channel(channel);
+  //update channel with the channel value
 }
 
 u32 clock_microseconds() { 

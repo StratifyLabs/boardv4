@@ -49,7 +49,7 @@ const sos_config_t sos_config = {
             .microseconds = clock_microseconds,
             .nanoseconds = NULL},
 
-  .task = {.task_total = SOS_BOARD_TASK_TOTAL,
+  .task = {.task_total = CONFIG_TASK_TOTAL,
            .start_stack_size = SOS_DEFAULT_START_STACK_SIZE,
            .start = sos_default_thread,
            .start_args = &link_transport},
@@ -108,7 +108,7 @@ const sos_config_t sos_config = {
           .pio_write = sys_pio_write,
           .pio_read = sys_pio_read,
           .pio_set_attributes = sys_pio_set_attributes,
-          .core_clock_frequency = SOS_BOARD_SYSTEM_CLOCK,
+          .core_clock_frequency = CONFIG_SYSTEM_CLOCK,
 #if !_IS_BOOT
           .kernel_request = sys_kernel_request,
           .kernel_request_api = sys_kernel_request_api

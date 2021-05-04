@@ -13,6 +13,7 @@ set(SOURCES
 	config/sys_config.c
 	config/sys_config.h
 	config/devfs_config.c
+	config/devfs_config.h
 	config/fs_config.c
 	config/fs_config.h
 	config/link_config.c

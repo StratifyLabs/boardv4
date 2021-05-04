@@ -1,6 +1,10 @@
 
 //Copyright 2021 Stratify Labs, See LICENSE.md for details
 
+#include <sos/events.h>
+#include <sos/debug.h>
+#include <cortexm/cortexm.h>
+
 #include "os_config.h"
 
 void os_event_handler(int event, void *args) {

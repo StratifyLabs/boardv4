@@ -20,7 +20,6 @@ u32 ram_usage_table[APPFS_RAM_USAGE_WORDS(APPFS_RAM_PAGES)] MCU_SYS_MEM;
 const devfs_device_t flash0
   = DEVFS_DEVICE("flash0", mcu_flash, 0, 0, 0, 0666, SYSFS_ROOT, S_IFBLK);
 
-// STM32_FLASH_LAYOUT_16_16_16_16_64_128_128_128
 const appfs_mem_config_t appfs_mem_config = {
   .usage_size = sizeof(ram_usage_table),
   .usage = ram_usage_table,
