@@ -53,8 +53,6 @@ const sysfs_t sysfs_list[] = {
     0777,
     SYSFS_ROOT), // the folder for ram/flash applications
   DEVFS_MOUNT("/dev", devfs_list, 0777, SYSFS_ROOT), // the list of devices
-  FATFS_MOUNT("/home", &fatfs_config, 0777, SYSFS_ROOT),
-  FATFS_MOUNT("/public", &fatfs_public_config, 0777, SYSFS_ROOT),
   SYSFS_MOUNT(
     "/",
     sysfs_list,
