@@ -2,3 +2,5 @@
 apps/
 cmake_arm/
 SDK/StratifyLabs-SDK/
+SDK/dependencies/
+
