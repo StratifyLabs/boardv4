@@ -61,7 +61,6 @@ set(LDSCRIPT_SOURCES
 
 sos_sdk_add_subdirectory(KERNEL_SOURCELIST ${CMAKE_CURRENT_SOURCE_DIR}/src)
 sos_sdk_add_subdirectory(BOOT_SOURCELIST ${CMAKE_CURRENT_SOURCE_DIR}/boot)
-sos_sdk_add_subdirectory(FONT_SOURCELIST ${CMAKE_CURRENT_SOURCE_DIR}/src/config/fonts)
 
 sos_sdk_bsp_target(RELEASE ${PROJECT_NAME} "" release ${SOS_ARCH})
 sos_sdk_bsp_target(DEBUG ${PROJECT_NAME} "" debug ${SOS_ARCH})
