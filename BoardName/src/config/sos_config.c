@@ -49,8 +49,7 @@ const sos_config_t sos_config = {
             .microseconds = clock_microseconds,
             .nanoseconds = NULL},
 
-  .task = {.task_total = CONFIG_TASK_TOTAL,
-           .start_stack_size = SOS_DEFAULT_START_STACK_SIZE,
+  .task = {.start_stack_size = SOS_DEFAULT_START_STACK_SIZE,
            .start = sos_default_thread,
            .start_args = &link_transport},
 
