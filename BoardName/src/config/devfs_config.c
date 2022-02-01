@@ -3,6 +3,11 @@
 #include "devfs_config.h"
 #include "link_config.h"
 
+#include "config.h"
+
+FIFO_DECLARE_CONFIG_STATE(stdio_in, CONFIG_STDIO_BUFFER_SIZE);
+FIFO_DECLARE_CONFIG_STATE(stdio_out, CONFIG_STDIO_BUFFER_SIZE);
+
 
 //list of devices for the /dev folder
 const devfs_device_t devfs_list[] = {
