@@ -27,7 +27,8 @@ set(BOOT_LIBRARIES
 	uECC_kernel
 	StratifyOS_${MCU}
 	StratifyOS_boot
-	StratifyOS_usbd)
+	StratifyOS_usbd
+	StratifyOS_${MCU})
 
 set(KERNEL_LIBRARIES
 	tinycrypt_kernel
