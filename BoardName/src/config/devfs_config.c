@@ -1,4 +1,5 @@
 #include <sos/fs/devfs.h>
+#include <device/sys.h>
 
 #include "devfs_config.h"
 #include "link_config.h"
