@@ -31,7 +31,6 @@ set(KERNEL_LIBRARIES
 	tinycrypt_kernel
 	uECC_kernel
 	fatfs
-	lvgl_kernel
 	StratifyOS_${MCU}
 	StratifyOS_sys
 	StratifyOS_usbd
