@@ -68,15 +68,6 @@ sos_sdk_bsp_target(DEBUG ${PROJECT_NAME} "" debug ${SOS_ARCH})
 
 add_executable(${RELEASE_TARGET})
 
-target_sources(${RELEASE_TARGET}
-	PUBLIC
-	${KERNEL_SOURCELIST}
-	${CMAKE_CURRENT_SOURCE_DIR}/sl_settings.json
-	${CMAKE_CURRENT_SOURCE_DIR}/../README.md
-	${LDSCRIPT_SOURCES}
-	${FONT_SOURCELIST}
-	)
-
 target_include_directories(${RELEASE_TARGET}
 	PUBLIC
 	${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -100,6 +91,16 @@ sos_sdk_bsp_target(BOOT_DEBUG ${PROJECT_NAME} boot debug ${SOS_ARCH})
 
 add_executable(${BOOT_RELEASE_TARGET})
 sos_sdk_copy_target(${RELEASE_TARGET} ${BOOT_RELEASE_TARGET})
+
+target_sources(${RELEASE_TARGET}
+	PUBLIC
+	${KERNEL_SOURCELIST}
+	${CMAKE_CURRENT_SOURCE_DIR}/sl_settings.json
+	${CMAKE_CURRENT_SOURCE_DIR}/../README.md
+	${LDSCRIPT_SOURCES}
+	${FONT_SOURCELIST}
+	)
+
 
 target_compile_definitions(${RELEASE_TARGET}
 	PUBLIC
