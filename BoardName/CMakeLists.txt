@@ -5,22 +5,27 @@ set(MCU stm32h735xx)
 
 # include other cmake modules as needed
 
-project(STM32H735G-DK)
+message(FATAL_ERROR "Change the board project name - then delete this line")
+project(Boardv4)
 
 
 #Stratify Labs assigned hardware ID
+message(FATAL_ERROR "Update the hardware id and kernel address - then delete this line")
 set(HARDWARE_ID 0x00000031)
 set(BOOT_START_ADDRESS 0x08000000)
 set(KERNEL_START_ADDRESS 0x08040000)
-set(BOOT_LINKER_FILE stm32h735xg-rom.ld)
+set(BOOT_LINKER_FILE linker-rom.ld)
 set(KERNEL_LINKER_FILE ${BOOT_LINKER_FILE})
 
 set(DEFINITIONS
 	__BOOT_START_ADDRESS=${BOOT_START_ADDRESS}
 	__KERNEL_START_ADDRESS=${KERNEL_START_ADDRESS}
-	__stm32h735xx
+	__${MCU}
   MCU_ARCH_STM32
 	)
+
+
+message(FATAL_ERROR "Choose your boot libraries - then delete this line")
 
 set(BOOT_LIBRARIES
 	tinycrypt_kernel
@@ -30,6 +35,7 @@ set(BOOT_LIBRARIES
 	StratifyOS_usbd
 	StratifyOS_${MCU})
 
+message(FATAL_ERROR "Choose your kernel libraries - then delete this line")
 set(KERNEL_LIBRARIES
 	tinycrypt_kernel
 	uECC_kernel
@@ -69,6 +75,7 @@ sos_sdk_bsp_target(DEBUG ${PROJECT_NAME} "" debug ${SOS_ARCH})
 
 add_executable(${RELEASE_TARGET})
 
+message(FATAL_ERROR "Update compile options as needed - then delete this line")
 target_include_directories(${RELEASE_TARGET}
 	PUBLIC
 	${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -99,7 +106,6 @@ target_sources(${RELEASE_TARGET}
 	${CMAKE_CURRENT_SOURCE_DIR}/sl_settings.json
 	${CMAKE_CURRENT_SOURCE_DIR}/../README.md
 	${LDSCRIPT_SOURCES}
-	${FONT_SOURCELIST}
 	)
 
 

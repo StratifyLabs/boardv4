@@ -1,9 +1,8 @@
 cmake_minimum_required (VERSION 3.19)
 
-project(Boardv4-SDK)
+project(${CMAKE_PROJECT_NAME}-SDK)
 
 set(API_IS_SDK TRUE CACHE INTERNAL "Build SDK projects")
-option(IS_PULL "Pull SDK projects" ON)
 
 set(BASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/dependencies)
 file(MAKE_DIRECTORY ${BASE_DIRECTORY})
@@ -33,7 +32,7 @@ set(STRATIFYOS_LWIP_PATH
 
 set(API_IS_SDK ON CACHE INTERNAL "API_IS_SDK disable include statements")
 
-sdk_add_subdirectory(API v1.2 ON)
+sdk_add_subdirectory(API v1.3 ON)
 include(${BASE_DIRECTORY}/API/libraries/API.cmake)
 
 
@@ -48,15 +47,15 @@ set(SOS_CONFIG_PATH ${CMAKE_CURRENT_SOURCE_DIR}/config CACHE INTERNAL "StratifyO
 set(BUILD_STM32H735 ON CACHE INTERNAL "ENABLE BUILDING OF H735")
 set(BUILD_STM32_ALL OFF CACHE INTERNAL "DONT BUILD ALL STM32 BUILDS")
 
+message(FATAL_ERROR "Choose the dependencies - then delete this line")
 sdk_add_subdirectory(StratifyOS-compiler-rt v1.1 OFF)
 sdk_add_subdirectory(StratifyOS-newlib v1.1 OFF)
 sdk_add_subdirectory(StratifyOS main ON)
 sdk_add_subdirectory(StratifyOS-mcu-stm32 v4.2 OFF)
-sdk_add_subdirectory(StratifyOS-fatfs v1.1 OFF)
 sdk_add_subdirectory(HalAPI v1.2 ON)
-sdk_add_subdirectory(SosAPI v1.2 ON)
-sdk_add_subdirectory(JsonAPI v1.2 ON)
-sdk_add_subdirectory(CryptoAPI v1.2 ON)
+sdk_add_subdirectory(SosAPI v1.3 ON)
+sdk_add_subdirectory(JsonAPI v1.3 ON)
 sdk_add_subdirectory(InetAPI v1.2 ON)
+sdk_add_subdirectory(CryptoAPI v1.2 ON)
 
 add_custom_target(status DEPENDS ${GIT_STATUS_DEPENDS})
