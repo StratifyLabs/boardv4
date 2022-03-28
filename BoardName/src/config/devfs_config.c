@@ -1,7 +1,13 @@
 #include <sos/fs/devfs.h>
+#include <device/sys.h>
 
 #include "devfs_config.h"
 #include "link_config.h"
+
+#include "config.h"
+
+FIFO_DECLARE_CONFIG_STATE(stdio_in, CONFIG_STDIO_BUFFER_SIZE);
+FIFO_DECLARE_CONFIG_STATE(stdio_out, CONFIG_STDIO_BUFFER_SIZE);
 
 
 //list of devices for the /dev folder

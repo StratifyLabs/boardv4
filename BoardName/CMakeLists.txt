@@ -23,15 +23,17 @@ set(DEFINITIONS
 	)
 
 set(BOOT_LIBRARIES
+	tinycrypt_kernel
+	uECC_kernel
 	StratifyOS_${MCU}
 	StratifyOS_boot
-	StratifyOS_usbd)
+	StratifyOS_usbd
+	StratifyOS_${MCU})
 
 set(KERNEL_LIBRARIES
 	tinycrypt_kernel
 	uECC_kernel
 	fatfs
-	lvgl_kernel
 	StratifyOS_${MCU}
 	StratifyOS_sys
 	StratifyOS_usbd
@@ -67,15 +69,6 @@ sos_sdk_bsp_target(DEBUG ${PROJECT_NAME} "" debug ${SOS_ARCH})
 
 add_executable(${RELEASE_TARGET})
 
-target_sources(${RELEASE_TARGET}
-	PUBLIC
-	${KERNEL_SOURCELIST}
-	${CMAKE_CURRENT_SOURCE_DIR}/sl_settings.json
-	${CMAKE_CURRENT_SOURCE_DIR}/../README.md
-	${LDSCRIPT_SOURCES}
-	${FONT_SOURCELIST}
-	)
-
 target_include_directories(${RELEASE_TARGET}
 	PUBLIC
 	${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -99,6 +92,16 @@ sos_sdk_bsp_target(BOOT_DEBUG ${PROJECT_NAME} boot debug ${SOS_ARCH})
 
 add_executable(${BOOT_RELEASE_TARGET})
 sos_sdk_copy_target(${RELEASE_TARGET} ${BOOT_RELEASE_TARGET})
+
+target_sources(${RELEASE_TARGET}
+	PUBLIC
+	${KERNEL_SOURCELIST}
+	${CMAKE_CURRENT_SOURCE_DIR}/sl_settings.json
+	${CMAKE_CURRENT_SOURCE_DIR}/../README.md
+	${LDSCRIPT_SOURCES}
+	${FONT_SOURCELIST}
+	)
+
 
 target_compile_definitions(${RELEASE_TARGET}
 	PUBLIC
@@ -126,8 +129,8 @@ target_sources(${BOOT_RELEASE_TARGET}
 add_executable(${BOOT_DEBUG_TARGET})
 sos_sdk_copy_target(${BOOT_RELEASE_TARGET} ${BOOT_DEBUG_TARGET})
 
-sos_sdk_bsp("${BOOT_RELEASE_OPTIONS}" ${HARDWARE_ID} ${BOOT_START_ADDRESS} "${KERNEL_LIBRARIES}")
-sos_sdk_bsp("${BOOT_DEBUG_OPTIONS}" ${HARDWARE_ID} ${BOOT_START_ADDRESS} "${KERNEL_LIBRARIES}")
+sos_sdk_bsp("${BOOT_RELEASE_OPTIONS}" ${HARDWARE_ID} ${BOOT_START_ADDRESS} "${BOOT_LIBRARIES}")
+sos_sdk_bsp("${BOOT_DEBUG_OPTIONS}" ${HARDWARE_ID} ${BOOT_START_ADDRESS} "${BOOT_LIBRARIES}")
 
 sos_sdk_bsp("${RELEASE_OPTIONS}" ${HARDWARE_ID} ${KERNEL_START_ADDRESS} "${KERNEL_LIBRARIES}")
 sos_sdk_bsp("${DEBUG_OPTIONS}" ${HARDWARE_ID} ${KERNEL_START_ADDRESS} "${KERNEL_LIBRARIES}")

@@ -49,8 +49,7 @@ const sos_config_t sos_config = {
             .microseconds = clock_microseconds,
             .nanoseconds = NULL},
 
-  .task = {.task_total = CONFIG_TASK_TOTAL,
-           .start_stack_size = SOS_DEFAULT_START_STACK_SIZE,
+  .task = {.start_stack_size = SOS_DEFAULT_START_STACK_SIZE,
            .start = sos_default_thread,
            .start_args = &link_transport},
 
@@ -86,7 +85,7 @@ const sos_config_t sos_config = {
 
   .sys = {.initialize = sys_initialize,
           .bootloader_start_address = __BOOT_START_ADDRESS,
-          .memory_size = SYSTEM_MEMORY_SIZE,
+          .memory_size = CONFIG_SYSTEM_MEMORY_SIZE,
           .get_serial_number = sys_get_serial_number,
           .os_mpu_text_mask = 0,
           .flags =
@@ -124,7 +123,7 @@ const sos_config_t sos_config = {
 #endif
             .disable_led = debug_disable_led,
             .enable_led = debug_enable_led,
-            .flags = SOS_BOARD_DEBUG_FLAGS},
+            .flags = CONFIG_DEBUG_FLAGS},
 
 #if _IS_BOOT
   .boot = {.api = {.code_size = (u32)&_etext,
@@ -145,6 +144,6 @@ const sos_config_t sos_config = {
   .socket_api = NULL};
 
 // This declares the task tables required by Stratify OS
-SOS_DECLARE_TASK_TABLE(SOS_BOARD_TASK_TOTAL);
+SOS_DECLARE_TASK_TABLE(CONFIG_TASK_TOTAL);
 
 
