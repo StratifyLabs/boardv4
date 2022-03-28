@@ -108,7 +108,7 @@ const sos_config_t sos_config = {
 
   .sys = {.initialize = sys_initialize,
           .bootloader_start_address = __BOOT_START_ADDRESS,
-          .memory_size = CONFIG_SYSTEM_MEMORY_SIZE,
+          .memory_size = SYSTEM_MEMORY_SIZE,
           .get_serial_number = sys_get_serial_number,
           .os_mpu_text_mask = 0,
           .flags =
@@ -153,7 +153,5 @@ const sos_config_t sos_config = {
   .event_handler = EVENT_HANDLER,
   .socket_api = NULL};
 
-// This declares the task tables required by Stratify OS
-SOS_DECLARE_TASK_TABLE(CONFIG_TASK_TOTAL);
 
 
