@@ -10,10 +10,13 @@
 
 #define CONFIG_SYSTEM_MEMORY_SIZE (32 * 1024)
 #define CONFIG_STDIO_BUFFER_SIZE 512
+
+#error "This value must match the system clock in Hz"
 #define CONFIG_SYSTEM_CLOCK 100000000
 
-// Total number of tasks (threads) for the entire system
-#define CONFIG_TASK_TOTAL 16
+#define CONFIG_DEBUG_FLAGS                                                     \
+  (SOS_DEBUG_MESSAGE | SOS_DEBUG_SYS | SOS_DEBUG_DEVICE)
+
 
 
 #endif /* CONFIG_H_ */

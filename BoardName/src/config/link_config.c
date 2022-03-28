@@ -49,10 +49,11 @@ link_transport_driver_t link_transport = {
 static usbd_control_t m_usb_control;
 static link_transport_phy_t m_fd;
 
+#error "Pin assignment values MUST be updated"
 const usb_attr_t m_usb_attr = {
   .o_flags = USB_FLAG_SET_DEVICE,
-  .pin_assignment.dp = {0, 11},
-  .pin_assignment.dm = {0, 12},
+  .pin_assignment.dp = {0xff, 0xff},
+  .pin_assignment.dm = {0xff, 0xff},
   .pin_assignment.id = {0xff, 0xff},
   .pin_assignment.vbus = {0xff, 0xff},
   .freq = 0

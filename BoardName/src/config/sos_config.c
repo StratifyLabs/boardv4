@@ -26,8 +26,25 @@
 #define VECTOR_TABLE_ADDRESS __BOOT_START_ADDRESS
 #include "../boot/boot_config.h"
 #include "../boot/boot_link_config.h"
+
+#define EVENT_HANDLER boot_event_handler
+#define TRACE_EVENT NULL
+#define GET_PUBLIC_KEY NULL
+#define PUBLIC_KEY_SIZE 64
+#define PUBLIC_KEY_ADDRESSS public_key
+#define TRACE_EVENT NULL
+
+
 #else
 #define VECTOR_TABLE_ADDRESS __KERNEL_START_ADDRESS
+
+#define EVENT_HANDLER os_event_handler
+#define TRACE_EVENT debug_trace_event
+#define GET_PUBLIC_KEY sys_get_public_key
+#define PUBLIC_KEY_SIZE 0
+#define PUBLIC_KEY_ADDRESSS NULL
+#define TRACE_EVENT debug_trace_event
+
 #endif
 
 SOS_DECLARE_SECRET_KEY_32(secret_key)
@@ -47,7 +64,7 @@ const sos_config_t sos_config = {
             .set_channel = clock_set_channel,
             .get_channel = clock_get_channel,
             .microseconds = clock_microseconds,
-            .nanoseconds = NULL},
+            .nanoseconds = clock_nanoseconds},
 
   .task = {.start_stack_size = SOS_DEFAULT_START_STACK_SIZE,
            .start = sos_default_thread,
@@ -65,17 +82,23 @@ const sos_config_t sos_config = {
           .read_endpoint = usb_read_endpoint},
 
   .cache = {.enable = cache_enable,
-            .disable = cache_disable,
-            .invalidate_instruction = cache_invalidate_instruction,
-            .invalidate_data = cache_invalidate_data,
-            .invalidate_data_block = cache_invalidate_data_block,
-            .clean_data = cache_clean_data,
-            .clean_data_block = cache_clean_data_block,
-            .external_sram_policy = SOS_CACHE_DEFAULT_POLICY,
-            .sram_policy = SOS_CACHE_DEFAULT_POLICY,
-            .flash_policy= SOS_CACHE_DEFAULT_POLICY,
-            .peripherals_policy= SOS_CACHE_PERIPHERALS_POLICY,
-            .lcd_policy= SOS_CACHE_PERIPHERALS_POLICY},
+          .disable = cache_disable,
+          .invalidate_instruction = cache_invalidate_instruction,
+          .invalidate_data = cache_invalidate_data,
+          .invalidate_data_block = cache_invalidate_data_block,
+          .clean_data = cache_clean_data,
+          .clean_data_block = cache_clean_data_block,
+          .external_sram_policy = SOS_CACHE_DEFAULT_POLICY,
+            .external_flash_policy = SOS_CACHE_DEFAULT_POLICY,
+          .sram_policy = SOS_CACHE_DEFAULT_POLICY,
+          .flash_policy= SOS_CACHE_DEFAULT_POLICY,
+          .peripherals_policy= SOS_CACHE_PERIPHERALS_POLICY,
+          .lcd_policy= SOS_CACHE_PERIPHERALS_POLICY,
+          .tightly_coupled_data_policy = SOS_CACHE_PERIPHERALS_POLICY,
+          .tightly_coupled_instruction_policy = SOS_CACHE_PERIPHERALS_POLICY,
+          .os_code_mpu_type = MPU_MEMORY_FLASH,
+          .os_data_mpu_type = MPU_MEMORY_SRAM,
+          .os_system_data_mpu_type = MPU_MEMORY_TIGHTLY_COUPLED_DATA},
 
   .mcu = {.interrupt_request_total = MCU_LAST_IRQ + 1,
           .interrupt_middle_priority = MCU_MIDDLE_IRQ_PRIORITY,
@@ -96,31 +119,20 @@ const sos_config_t sos_config = {
           .mcu_git_hash = NULL,
           .id = SL_CONFIG_DOCUMENT_ID,
           .team_id = SL_CONFIG_TEAM_ID,
-#if _IS_BOOT
-          .secret_key_size = 32,
-          .secret_key_address = secret_key,
-#else
-    .secret_key_size = 0,
-    .secret_key_address = 0,
-#endif
+          .secret_key_size = PUBLIC_KEY_SIZE,
+          .secret_key_address = PUBLIC_KEY_ADDRESS,
           .vector_table = (void *)(VECTOR_TABLE_ADDRESS),
           .pio_write = sys_pio_write,
           .pio_read = sys_pio_read,
           .pio_set_attributes = sys_pio_set_attributes,
           .core_clock_frequency = CONFIG_SYSTEM_CLOCK,
-#if !_IS_BOOT
           .kernel_request = sys_kernel_request,
           .kernel_request_api = sys_kernel_request_api
-#endif
   },
 
   .debug = {.initialize = debug_initialize,
             .write = debug_write,
-#if _IS_BOOT
-            .trace_event = NULL,
-#else
-            .trace_event = debug_trace_event,
-#endif
+            .trace_event = TRACE_EVENT,
             .disable_led = debug_disable_led,
             .enable_led = debug_enable_led,
             .flags = CONFIG_DEBUG_FLAGS},
@@ -137,10 +149,8 @@ const sos_config_t sos_config = {
            .flash_erase_page = mcu_flash_erasepage,
            .flash_write_page = mcu_flash_writepage,
            .link_transport_driver = &boot_link_usb_transport},
-  .event_handler = boot_event_handler,
-#else
-  .event_handler = os_event_handler,
 #endif
+  .event_handler = EVENT_HANDLER,
   .socket_api = NULL};
 
 // This declares the task tables required by Stratify OS
